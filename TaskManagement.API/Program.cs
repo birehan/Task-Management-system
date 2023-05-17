@@ -1,5 +1,8 @@
 using TaskManagement.Persistence;
 using TaskManagement.Application;
+using TaskManagement.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,16 +14,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 
+
+builder.Services.AddControllers(opt =>  {
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    opt.Filters.Add(new AuthorizeFilter(policy));
+});
+
 // Add services to the container.
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices();
+builder.Services.AddIdentityServices(builder.Configuration);
 
-builder.Services.AddCors(o =>
-{
-    o.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("CorsPolicy", policy =>
+    policy.AllowAnyMethod().
+    AllowCredentials().
+    AllowAnyHeader());
 });
 
 
@@ -35,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -96,3 +96,11 @@
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/obj/Debug/net6.0/TaskManagement.API.pdb
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/obj/Debug/net6.0/TaskManagement.API.genruntimeconfig.cache
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/obj/Debug/net6.0/ref/TaskManagement.API.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll

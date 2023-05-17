@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskManagement.Domain;
 using TaskManagement.Domain.Common;
 
 namespace TaskManagement.Persistence
 {
-    public class TaskManagementDbContext : DbContext
+    public class TaskManagementDbContext : IdentityDbContext<AppUser>
     {
           public TaskManagementDbContext(DbContextOptions<TaskManagementDbContext> options)
            : base(options)
@@ -19,14 +16,18 @@ namespace TaskManagement.Persistence
 
          protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+              base.OnModelCreating(modelBuilder);
+
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TaskManagementDbContext).Assembly);
 
              // Configure one-to-many relationship between Task and CheckList
-        modelBuilder.Entity<Domain.Task>()
-            .HasMany(t => t.CheckLists)
-            .WithOne(cl => cl.Task)
-            .HasForeignKey(cl => cl.TaskId)
-            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Domain.Task>()
+                .HasMany(t => t.CheckLists)
+                .WithOne(cl => cl.Task)
+                .HasForeignKey(cl => cl.TaskId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 
