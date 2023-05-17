@@ -1,0 +1,5 @@
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/BlogApp.Application.UnitTest.csproj.AssemblyReference.cache
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/BlogApp.Application.UnitTest.GeneratedMSBuildEditorConfig.editorconfig
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/BlogApp.Application.UnitTest.AssemblyInfoInputs.cache
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/BlogApp.Application.UnitTest.AssemblyInfo.cs
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/BlogApp.Application.UnitTest.csproj.CoreCompileInputs.cache
