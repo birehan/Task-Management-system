@@ -1,0 +1,12 @@
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/bin/Debug/net6.0/TaskManagement.Domain.deps.json
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/bin/Debug/net6.0/TaskManagement.Domain.dll
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/bin/Debug/net6.0/TaskManagement.Domain.pdb
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.csproj.AssemblyReference.cache
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.AssemblyInfoInputs.cache
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.AssemblyInfo.cs
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.csproj.CoreCompileInputs.cache
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.dll
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/refint/TaskManagement.Domain.dll
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/TaskManagement.Domain.pdb
+/home/babi/Desktop/TaskManagement/TaskManagement/TaskManagement.Domain/obj/Debug/net6.0/ref/TaskManagement.Domain.dll
