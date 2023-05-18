@@ -28,6 +28,21 @@ namespace TaskManagement.Persistence
                 .WithOne(cl => cl.Task)
                 .HasForeignKey(cl => cl.TaskId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+             // Configure the relationships
+            modelBuilder.Entity<Domain.Task>()
+                .HasOne(t => t.Creator)
+                .WithMany(u => u.Tasks)
+                .HasForeignKey(t => t.CreatorId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CheckList>()
+                .HasOne(cl => cl.Creator)
+                .WithMany(u => u.CheckLists)
+                .HasForeignKey(cl => cl.CreatorId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 

@@ -1,5 +1,6 @@
 using API.Controllers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.CheckLists.CQRS.Commands;
 using TaskManagement.Application.Features.CheckLists.CQRS.Queries;
@@ -27,23 +28,25 @@ namespace TaskManagement.API.Controllers
             return HandleResult(await _mediator.Send(new GetCheckListDetailQuery { Id = id }));
         }
         
+
+        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCheckListDto createCheckList)
         {
             var command = new CreateCheckListCommand { CheckListDto = createCheckList };
             return  HandleResult(await _mediator.Send(command));
         }
-
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UpdateCheckListDto checkListDto)
+        
+        [Authorize(Policy = "IsCheckListCreator")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromBody] UpdateCheckListDto checkListDto, int id)
         {
-
-      
+            checkListDto.Id = id;
             var command = new UpdateCheckListCommand { CheckListDto = checkListDto };
             return HandleResult( await _mediator.Send(command));
         }
 
-
+        [Authorize(Policy = "IsCheckListCreator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

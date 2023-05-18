@@ -5,6 +5,7 @@ using TaskManagement.Application.Features.CheckLists.DTOs.Validators;
 using TaskManagement.Application.Responses;
 using MediatR;
 using TaskManagement.Domain;
+using TaskManagement.Application.Interfaces;
 
 namespace TaskManagement.Application.Features.CheckLists.CQRS.Handlers
 {
@@ -13,10 +14,13 @@ namespace TaskManagement.Application.Features.CheckLists.CQRS.Handlers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateCheckListCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IUserAccessor _userAccessor;
+
+        public CreateCheckListCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,  IUserAccessor userAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+             _userAccessor = userAccessor;
         }
 
         public async Task<Result<int>> Handle(CreateCheckListCommand request, CancellationToken cancellationToken)
@@ -33,7 +37,26 @@ namespace TaskManagement.Application.Features.CheckLists.CQRS.Handlers
             }
             else
             {
+
+                var currentUser = await _userAccessor.GetCurrentUser();
+
+                if (currentUser == null)
+                {
+                    response.Success = false;
+                    response.Message = "User not found";
+                    return response;
+                }
+
+                var task = await _unitOfWork.TaskRepository.Get(request.CheckListDto.TaskId);
+                if (task.CreatorId != currentUser.Id){
+                     response.Success = false;
+                    response.Message = "Not Authorized";
+                    return response;
+                }
+
+
                 var checkList = _mapper.Map<CheckList>(request.CheckListDto);
+                checkList.Creator = currentUser;
 
                 checkList = await _unitOfWork.CheckListRepository.Add(checkList);
 

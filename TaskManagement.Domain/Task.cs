@@ -16,7 +16,10 @@ namespace TaskManagement.Domain
     public bool Status { get; set; }
 
     public ICollection<CheckList> CheckLists { get; set; } =  new List<CheckList>();
-    // w
 
+
+    public string CreatorId { get; set; }
+
+    public AppUser Creator { get; set; }
     }
 }

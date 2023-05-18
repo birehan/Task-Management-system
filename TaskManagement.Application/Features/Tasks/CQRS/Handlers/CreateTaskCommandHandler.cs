@@ -5,6 +5,9 @@ using TaskManagement.Application.Features.Tasks.CQRS.Commands;
 using TaskManagement.Application.Features.Tasks.DTOs.Validators;
 using TaskManagement.Application.Responses;
 using MediatR;
+using TaskManagement.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using TaskManagement.Domain;
 
 namespace TaskManagement.Application.Features.Tasks.CQRS.Handlers
 {
@@ -13,14 +16,21 @@ namespace TaskManagement.Application.Features.Tasks.CQRS.Handlers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CreateTaskCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IUserAccessor _userAccessor;
+
+
+
+        public CreateTaskCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,  IUserAccessor userAccessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userAccessor = userAccessor;
+
         }
 
         public async Task<Result<int>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
+
             var response = new Result<int>();
             var validator = new CreateTaskDtoValidator();
             var validationResult = await validator.ValidateAsync(request.TaskDto);
@@ -33,9 +43,19 @@ namespace TaskManagement.Application.Features.Tasks.CQRS.Handlers
             }
             else
             {
-                var task = _mapper.Map<Domain.Task>(request.TaskDto);
+                var currentUser = await _userAccessor.GetCurrentUser();
 
-                task = await _unitOfWork.TaskRepository.Add(task);
+                if (currentUser == null)
+                {
+                    response.Success = false;
+                    response.Message = "User not found";
+                    return response;
+                }
+
+                var task = _mapper.Map<Domain.Task>(request.TaskDto);
+                task.Creator = currentUser;
+
+                await _unitOfWork.TaskRepository.Add(task);
 
                 if (await _unitOfWork.Save() > 0)
                 {

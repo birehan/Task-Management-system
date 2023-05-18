@@ -104,3 +104,5 @@
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
 /home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/TaskManagement.Infrastructure.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.API/bin/Debug/net6.0/TaskManagement.Infrastructure.pdb

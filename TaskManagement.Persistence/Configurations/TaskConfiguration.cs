@@ -8,27 +8,27 @@ namespace TaskManagement.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Domain.Task> builder)
         {
-             builder.HasData(
-                  new Domain.Task
-                       {
-                           Title = "title",
-                           Description = "Sample Content",
-                           Status = false,
-                           StartDate = new DateTime(),
-                           EndDate = new DateTime(),
-                            Id = 1
-                       },
+          //    builder.HasData(
+          //         new Domain.Task
+          //              {
+          //                  Title = "title",
+          //                  Description = "Sample Content",
+          //                  Status = false,
+          //                  StartDate = new DateTime(),
+          //                  EndDate = new DateTime(),
+          //                   Id = 1
+          //              },
 
-                  new Domain.Task
-                       {
-                           Title = "title 2",
-                           Description = "Sample Content 2",
-                           Status = false,
-                           StartDate = new DateTime(),
-                           EndDate = new DateTime(),
-                            Id = 2
-                       }
-                );
+          //         new Domain.Task
+          //              {
+          //                  Title = "title 2",
+          //                  Description = "Sample Content 2",
+          //                  Status = false,
+          //                  StartDate = new DateTime(),
+          //                  EndDate = new DateTime(),
+          //                   Id = 2
+          //              }
+          //       );
 
         }
     }

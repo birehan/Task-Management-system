@@ -1,5 +1,6 @@
 using API.Controllers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.Tasks.CQRS.Commands;
 using TaskManagement.Application.Features.Tasks.CQRS.Queries;
@@ -35,16 +36,16 @@ namespace TasksManagement.API.Controllers
             return  HandleResult(await _mediator.Send(command));
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UpdateTaskDto taskDto)
+       [Authorize(Policy = "IsTaskCreator")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromBody] UpdateTaskDto taskDto, int id)
         {
-
-      
+            taskDto.Id = id;  
             var command = new UpdateTaskCommand { TaskDto = taskDto };
             return HandleResult( await _mediator.Send(command));
         }
 
-
+        [Authorize(Policy = "IsTaskCreator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

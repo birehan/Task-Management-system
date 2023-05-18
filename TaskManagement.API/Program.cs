@@ -3,6 +3,8 @@ using TaskManagement.Application;
 using TaskManagement.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using TaskManagement.Application.Interfaces;
+using TaskManagement.Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,9 @@ builder.Services.AddCors(options => {
     AllowAnyHeader());
 });
 
+// builder.Services.AddDbContext<TaskManagementDbContext>(); // Replace "YourDbContext" with the actual name of your DbContext class
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
 
 
 var app = builder.Build();
@@ -44,6 +49,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("CorsPolicy");
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TaskManagement.Domain.Common;
 
 namespace TaskManagement.Domain
@@ -17,6 +13,10 @@ namespace TaskManagement.Domain
     
     public Task Task { get; set; } 
 
+
+    public string CreatorId { get; set; }
+
+    public AppUser Creator { get; set; }
 
     }
 }

@@ -9,7 +9,11 @@ namespace TaskManagement.Application.Profiles
     {
          public MappingProfile()
          {
-            CreateMap<TaskDto, Domain.Task>().ReverseMap();
+            CreateMap<TaskDto, Domain.Task>()
+            .ReverseMap()
+            .ForMember(x => x.CreatorUsername, o => o.MapFrom(s => s.Creator.UserName))
+            .ForMember(x => x.CheckLists, o => o.MapFrom(s => s.CheckLists));
+
             CreateMap<CreateTaskDto, Domain.Task>().ReverseMap();
             CreateMap<UpdateTaskDto, Domain.Task>().ReverseMap();
 

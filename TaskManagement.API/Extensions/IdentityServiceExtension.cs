@@ -3,12 +3,9 @@ using TaskManagement.API.Services;
 using TaskManagement.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using TaskManagement.Persistence;
-using TaskManagement.API.DTOs;
+using TaskManagement.Infrastructure.Security;
 
 namespace TaskManagement.API.Extensions {
     public static class IdentityServerExtensions 
@@ -20,10 +17,6 @@ namespace TaskManagement.API.Extensions {
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.User.RequireUniqueEmail = true;
-
-                // Remove the UserName-related options
-
-               
             })
             .AddEntityFrameworkStores<TaskManagementDbContext>();
 
@@ -36,23 +29,26 @@ namespace TaskManagement.API.Extensions {
                             IssuerSigningKey = key,
                             ValidateIssuer = false,
                             ValidateAudience = false
-                        };
-                     
+                        };   
              });
 
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("IsTaskCreator", policy => {
+                    policy.Requirements.Add(new IsTaskCreatorRequirement());
+                });
+            });
+            
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("IsCheckListCreator", policy => {
+                    policy.Requirements.Add(new IsCheckListCreatorRequirement());
+                });
+            });
 
+            services.AddTransient<IAuthorizationHandler, IsTaskCreatorRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsCheckListCreatorRequirementHandler>();
             services.AddScoped<TokenService>();
             
             return services;
         }
     }
 }
-
-
-            // services.AddAuthorization(opt => {
-            //     opt.AddPolicy("IsActivityHost", policy => {
-            //         policy.Requirements.Add(new IsHostRequirement());
-            //     });
-            // });
-
-            // services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
