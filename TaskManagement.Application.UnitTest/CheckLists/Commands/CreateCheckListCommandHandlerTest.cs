@@ -6,7 +6,7 @@ using TaskManagement.Application.Features.CheckLists.DTOs;
 using TaskManagement.Application.Profiles;
 using TaskManagement.Application.Responses;
 using TaskManagement.Application.UnitTest.Mocks;
-
+using TaskManagement.Application.Interfaces;
 using MediatR;
 using Moq;
 using Shouldly;
@@ -16,73 +16,91 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-using Xunit;
 
+using Xunit;
 namespace TaskManagement.Application.UnitTest.CheckLists.Commands
 {
     public class CreateCheckListCommandHandlerTest
     {
-
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockRepo;
-        private readonly CreateCheckListDto _CheckListDto;
+        private readonly CreateCheckListDto _checkListDto;
         private readonly CreateCheckListCommandHandler _handler;
+
+        private readonly Mock<IUserAccessor> _mockUserAccessor;
+
+
         public CreateCheckListCommandHandlerTest()
         {
             _mockRepo = MockUnitOfWork.GetUnitOfWork();
+            _mockUserAccessor = new Mock<IUserAccessor>();
+
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile<MappingProfile>();
             });
             _mapper = mapperConfig.CreateMapper();
 
-            _CheckListDto = new CreateCheckListDto
+            _checkListDto = new CreateCheckListDto
             {
                 Title = "title",
                 Description = "Sample Content",
                 Status = true,
-                TaskId =1,
-        };
+                TaskId = 1,
+            };
 
-            _handler = new CreateCheckListCommandHandler(_mockRepo.Object, _mapper);
-
+            _handler = new CreateCheckListCommandHandler(_mockRepo.Object, _mapper, _mockUserAccessor.Object);
         }
 
-
         [Fact]
-        public async Task CreateCheckList()
+        public async Task CreateCheckList_ValidTaskId_ReturnsSuccess()
         {
+            // Arrange
+            var task = new Domain.Task { Id = _checkListDto.TaskId /* Set other properties accordingly */ };
+            _mockUserAccessor.Setup(u => u.GetCurrentUser()).ReturnsAsync(new Domain.AppUser{Id = "1"});
 
-            // Create a valid task with the specified TaskId
-            var task = new Domain.Task { Id = _CheckListDto.TaskId /* Set other properties accordingly */ };
 
-            // Mock the TaskRepository behavior to return the valid task
-            _mockRepo.Setup(r => r.TaskRepository.Exists(_CheckListDto.TaskId))
+              _mockRepo.Setup(r => r.TaskRepository.Get(_checkListDto.TaskId)).ReturnsAsync((int Id) =>
+                {
+                return new Domain.Task{Id=_checkListDto.TaskId, CreatorId="1"};
+                });
+
+
+
+            _mockRepo.Setup(r => r.TaskRepository.Exists(_checkListDto.TaskId))
                 .ReturnsAsync(true);
 
+            // Act
+            var result = await _handler.Handle(new CreateCheckListCommand { CheckListDto = _checkListDto }, CancellationToken.None);
 
-             var result = await _handler.Handle(new CreateCheckListCommand { CheckListDto = _CheckListDto }, CancellationToken.None);
+            // Assert
             result.ShouldBeOfType<Result<int>>();
+            Console.WriteLine(result.Message);
             result.Success.ShouldBeTrue();
             var checkLists = await _mockRepo.Object.CheckListRepository.GetAll();
             checkLists.Count.ShouldBe(3);
         }
+
         [Fact]
-    public async Task CreateCheckList_InvalidTaskId_ReturnsFailure()
-    {
-    // Set an invalid TaskId that doesn't exist
-    _CheckListDto.TaskId = 999;
+        public async Task CreateCheckList_InvalidTaskId_ReturnsFailure()
+        {
+            // Arrange
+            _checkListDto.TaskId = 999;
 
-    // Mock the TaskRepository behavior to return false for the task existence
-    _mockRepo.Setup(r => r.TaskRepository.Exists(_CheckListDto.TaskId))
-        .ReturnsAsync(false);
+            _mockRepo.Setup(r => r.TaskRepository.Exists(_checkListDto.TaskId))
+                .ReturnsAsync(false);
+            
+            _mockUserAccessor.Setup(u => u.GetCurrentUser()).ReturnsAsync(new Domain.AppUser());
 
-    var result = await _handler.Handle(new CreateCheckListCommand { CheckListDto = _CheckListDto }, CancellationToken.None);
-    result.ShouldBeOfType<Result<int>>();
-    result.Success.ShouldBeFalse();
-    result.Message.ShouldBe("Creation Failed");
-    result.Errors.ShouldNotBeEmpty();
-    }
 
+            // Act
+            var result = await _handler.Handle(new CreateCheckListCommand { CheckListDto = _checkListDto }, CancellationToken.None);
+
+            // Assert
+            result.ShouldBeOfType<Result<int>>();
+            result.Success.ShouldBeFalse();
+            result.Message.ShouldBe("Creation Failed");
+            result.Errors.ShouldNotBeEmpty();
+        }
     }
 }

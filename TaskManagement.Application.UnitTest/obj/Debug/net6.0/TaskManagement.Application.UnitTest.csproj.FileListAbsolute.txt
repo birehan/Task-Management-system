@@ -227,3 +227,11 @@
 /home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/TaskManagement.Application.UnitTest.pdb
 /home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/TaskManagement.Application.UnitTest.genruntimeconfig.cache
 /home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/obj/Debug/net6.0/ref/TaskManagement.Application.UnitTest.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.Extensions.Identity.Core.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.Extensions.Identity.Stores.dll
+/home/babi/Desktop/Task-Management-system/TaskManagement.Application.UnitTest/bin/Debug/net6.0/Microsoft.Extensions.Logging.dll
